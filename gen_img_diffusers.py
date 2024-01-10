@@ -89,6 +89,7 @@ from diffusers import (
     HeunDiscreteScheduler,
     KDPM2DiscreteScheduler,
     KDPM2AncestralDiscreteScheduler,
+    DEISMultistepScheduler,
     # UNet2DConditionModel,
     StableDiffusionPipeline,
 )
@@ -2269,6 +2270,10 @@ def main(args):
         scheduler_cls = KDPM2AncestralDiscreteScheduler
         scheduler_module = diffusers.schedulers.scheduling_k_dpm_2_ancestral_discrete
         scheduler_num_noises_per_step = 2
+    elif args.sampler == "deis":
+        scheduler_cls = DPMSolverMultistepScheduler
+        sched_init_args["algorithm_type"] = args.sampler
+        scheduler_module = diffusers.schedulers.scheduling_deis_multistep
 
     if args.v_parameterization:
         sched_init_args["prediction_type"] = "v_prediction"
