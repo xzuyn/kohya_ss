@@ -3681,6 +3681,11 @@ def get_optimizer(args, trainable_params):
         print(f"use AdamW optimizer | {optimizer_kwargs}")
         optimizer_class = torch.optim.AdamW
         optimizer = optimizer_class(trainable_params, lr=lr, **optimizer_kwargs)
+    elif optimizer_type == "AdamW32bit".lower():
+        print(f"use AdamW32bit optimizer | {optimizer_kwargs}")
+        optimizer_class = torch.optim.AdamW32bit
+        optimizer = optimizer_class(trainable_params, lr=lr,
+                                    **optimizer_kwargs)
 
     if optimizer is None:
         # 任意のoptimizerを使う
