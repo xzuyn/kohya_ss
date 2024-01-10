@@ -93,7 +93,7 @@ class BasicTraining:
                 choices=[
                     "AdamW8bit",
                     "AdamW",
-                    "AdamW32bit"
+                    "AdamW32bit",
                     "PagedAdamW8bit",
                     "PagedAdamW",
                     "PagedAdamW32bit",
