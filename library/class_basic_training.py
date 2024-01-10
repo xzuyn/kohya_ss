@@ -91,8 +91,13 @@ class BasicTraining:
             self.optimizer = gr.Dropdown(
                 label="Optimizer",
                 choices=[
-                    "AdamW",
                     "AdamW8bit",
+                    "AdamW",
+                    "AdamW32bit"
+                    "PagedAdamW8bit",
+                    "PagedAdamW",
+                    "PagedAdamW32bit",
+                    "Prodigy",
                     "Adafactor",
                     "DAdaptation",
                     "DAdaptAdaGrad",
@@ -102,16 +107,13 @@ class BasicTraining:
                     "DAdaptAdamPreprint",
                     "DAdaptLion",
                     "DAdaptSGD",
-                    "Lion",
                     "Lion8bit",
-                    "PagedAdamW8bit",
-                    "PagedAdamW32bit",
+                    "Lion",
                     "PagedLion8bit",
-                    "Prodigy",
                     "SGDNesterov",
                     "SGDNesterov8bit",
                 ],
-                value="AdamW8bit",
+                value="PagedAdamW",
                 interactive=True,
             )
         with gr.Row():
