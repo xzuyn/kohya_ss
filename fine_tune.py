@@ -486,6 +486,10 @@ def setup_parser() -> argparse.ArgumentParser:
         default=None,
         help="learning rate for text encoder, default is same as unet / Text Encoderの学習率、デフォルトはunetと同じ",
     )
+    parser.add_argument(
+        "--no_half_vae",
+        action="store_true",
+    )  # Does nothing. just to remove error.
 
     return parser
 
