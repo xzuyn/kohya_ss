@@ -52,6 +52,7 @@ from diffusers import (
     KDPM2DiscreteScheduler,
     KDPM2AncestralDiscreteScheduler,
     AutoencoderKL,
+    DEISMultistepScheduler,
 )
 from library import custom_train_functions
 from library.original_unet import UNet2DConditionModel
@@ -3072,6 +3073,7 @@ def add_training_arguments(parser: argparse.ArgumentParser, support_dreambooth: 
             "k_euler_a",
             "k_dpm_2",
             "k_dpm_2_a",
+            "deis"
         ],
         help=f"sampler (scheduler) type for sample images / サンプル出力時のサンプラー（スケジューラ）の種類",
     )
@@ -3709,6 +3711,11 @@ def get_optimizer(args, trainable_params):
         print(f"use AdamW optimizer | {optimizer_kwargs}")
         optimizer_class = torch.optim.AdamW
         optimizer = optimizer_class(trainable_params, lr=lr, **optimizer_kwargs)
+    elif optimizer_type == "AdamW32bit".lower():
+        print(f"use AdamW32bit optimizer | {optimizer_kwargs}")
+        optimizer_class = torch.optim.AdamW32bit
+        optimizer = optimizer_class(trainable_params, lr=lr,
+                                    **optimizer_kwargs)
 
     if optimizer is None:
         # 任意のoptimizerを使う
@@ -4556,6 +4563,8 @@ def get_my_scheduler(
         scheduler_cls = KDPM2DiscreteScheduler
     elif sample_sampler == "dpm_2_a" or sample_sampler == "k_dpm_2_a":
         scheduler_cls = KDPM2AncestralDiscreteScheduler
+    elif sample_sampler == "deis":
+        scheduler_cls = DEISMultistepScheduler
     else:
         scheduler_cls = DDIMScheduler
 
