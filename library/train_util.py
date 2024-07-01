@@ -3778,6 +3778,20 @@ def get_optimizer(args, trainable_params):
             optimizer_kwargs["relative_step"] = True
         logger.info(f"use Adafactor optimizer | {optimizer_kwargs}")
 
+    elif optimizer_type == "CAME".lower():
+        logger.info(f"use CAME optimizer | {optimizer_kwargs}")
+        try:
+            import came_pytorch
+        except ImportError:
+            raise ImportError("No came-pytorch / came-pytorchがインストールされていないようです")
+        try:
+            optimizer_class = came_pytorch.CAME
+        except AttributeError:
+            raise AttributeError(
+                "No CAME. Please install came-pytorch. / CAMEが定義されていません。came-pytorchがインストールされていないようです。"
+            )
+        optimizer = optimizer_class(trainable_params, lr=lr, **optimizer_kwargs)
+
         if optimizer_kwargs["relative_step"]:
             logger.info(f"relative_step is true / relative_stepがtrueです")
             if lr != 0.0:
