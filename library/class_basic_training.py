@@ -110,6 +110,7 @@ class BasicTraining:
                     "Prodigy",
                     "SGDNesterov",
                     "SGDNesterov8bit",
+                    "CAME",
                 ],
                 value="AdamW8bit",
                 interactive=True,
